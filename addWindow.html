@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+</head>
+<body>
+    <div class="container">
+        <form>
+            <label>Enter Item</label>
+            <input type="text" id="item" autofocus>
+            <input type="submit" class="btn waves-effect waves-light" />
+        </form>
+    </div>
+    <script>
+        const electron = require('electron');
+        const {ipcRenderer} = electron;
+        let $ = document.querySelector.bind(document);
+
+        const form = $('form');
+        form.addEventListener('submit', submitForm);
+
+        function submitForm(e) {
+            e.preventDefault();
+            const item = $('#item').value;
+            item !== '' ? ipcRenderer.send('item:add', item) : alert('Input cannot be empty!');
+        }
+    </script>
+</body>
+</html>
